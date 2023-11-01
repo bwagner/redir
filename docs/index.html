@@ -5,35 +5,27 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Redirecting...</title>
-<script>
-function redirect() {
-  // Get the current URL
-  const currentURL = new URL(window.location.href);
-
-  // Extract the 'destination' parameter from the URL
-  let destinationURL = currentURL.searchParams.get('d');
-
-  if(destinationURL) {
-    // Properly encode the destination URL to preserve its query parameters
-    destinationURL = encodeURI(destinationURL);
-
-    // Remove the 'destination' parameter from the searchParams
-    currentURL.searchParams.delete('d');
-
-    // Construct the new URL with remaining GET parameters
-    const newURL = destinationURL + (currentURL.search ? '&' + currentURL.search.substring(1) : '');
-
-    // Update the href for the manual redirect link
-    document.getElementById('redirectLink').href = newURL;
-
-    // Redirect to the new URL
-    window.location.href = newURL;
-  } else {
-    // Inform the user that the destination URL is missing
-    document.getElementById('message').textContent = 'No destination URL provided.';
-    document.getElementById('redirectLink').style.display = 'none'; // Hide the redirect link
+<style>
+  /* Initially hide the body's content */
+  body {
+    visibility: hidden;
   }
-}
+</style>
+<script>
+  function redirect() {
+    const currentURL = new URL(window.location.href);
+    const destinationURL = currentURL.searchParams.get('d');
+
+    if (destinationURL) {
+      currentURL.searchParams.delete('d');
+      const newURL = destinationURL + (currentURL.search ? '&' + currentURL.search.substring(1) : '');
+      window.location.href = newURL;
+    } else {
+      document.body.style.visibility = 'visible';
+      document.getElementById('message').textContent = 'No destination URL provided.';
+      document.getElementById('redirectLink').style.display = 'none';
+    }
+  }
 </script>
 </head>
 <body>
@@ -45,4 +37,3 @@ function redirect() {
 </script>
 </body>
 </html>
-
