@@ -12,6 +12,19 @@
   }
 </style>
 <script>
+	/*
+	It doesn't make sense to pass the d-parameter! It defeats the purpose of the redirect, which is done
+	solely to hide the final url from the redirection!
+	We're using this script to define a unique url which is then url-encoded to generate qr-codes in
+	videos (with t=...) appended (see self_ref_yt_vid.py).
+	If this script is supposed to be generic, we'd need a database that maps a unique key to the final
+	url.
+	The simplest approach would be to have a separate javascript module which consists only of an
+	associative array. This module is generated from a script which allows to extend the associative
+	array. It could be even a plain array, since the index into the array will do what we need.
+	So the d-parameter would no longer contain the url, instead it contains the index into the
+	array of urls.
+	*/
   function redirect() {
     const currentURL = new URL(window.location.href);
     const destinationURL = currentURL.searchParams.get('d');
